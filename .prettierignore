@@ -1,0 +1,14 @@
+# Ignore dependencies
+node_modules/
+
+# Ignore executables
+bin/
+
+# Ignore test coverage reports
+coverage/
+
+# Ignore build output
+dist/
+
+# Ignore logs
+logs/
