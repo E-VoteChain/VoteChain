@@ -1,6 +1,19 @@
 import React from 'react';
 import { AuthContextProps } from './types';
 
-const AuthContext = React.createContext<AuthContextProps | undefined>(undefined);
+const defaultAuthState = {
+  is_connected: false,
+  account: '',
+  instance: null,
+  is_admin: false,
+  flag: false,
+};
+
+const noop = () => {};
+
+const AuthContext = React.createContext<AuthContextProps>({
+  state: defaultAuthState,
+  dispatch: noop,
+});
 
 export default AuthContext;
