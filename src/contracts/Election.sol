@@ -102,4 +102,55 @@ contract VotingForPurpose{
         candidates[_candidateID].voteCount++;
         elections[_electionid].totalVotes++;
     }
+
+    function totalVotesofElection(uint _electionid) public view returns(uint){
+        return elections[_electionid].totalVotes;
+    }
+
+    function totalVotesofCandidate(uint _candidateid) public view returns(uint){
+        return candidates[_candidateid].voteCount;
+    }
+
+    function noOfElections() public view returns(uint){
+        return electionCount;
+    }
+    function noOfCandidates() public view returns(uint){
+        return candidatesCount;
+    }
+    function noOfTotalRegisteredVoters() public view ownerOn returns(uint){
+        return totalregisteredvoters;
+    }
+
+    function totalRegisteredVoters() public view ownerOn returns(address[] memory){
+        return voterslist;
+    }
+
+    function getElection(uint _electionid) public view returns(Election memory){
+        require(_electionid<=electionCount,"Invalid Election");
+        return elections[_electionid];
+    }
+
+    function getCandidate(uint _candidateid) public view returns(Candidate memory){
+        require(_candidateid<=candidatesCount,"Invalid Candidate");
+        return candidates[_candidateid];
+    } 
+
+    function getVoterdetails(address _voteraddress) public view returns(Voter memory){
+        require(msg.sender==owner || msg.sender==_voteraddress,"Only the voter and admin can check the details");
+        require(bytes(voters[_voteraddress].votername).length!=0,"Invalid Voter");
+        return voters[_voteraddress];
+    } 
+
+    function deleteElection(uint election_id) public ownerOn{
+        delete elections[election_id];
+    }
+
+    function hasVoted(address _voteraddress,uint election_id) public view returns(bool){
+        require(msg.sender==owner || msg.sender==_voteraddress,"Only the voter and admin can check the details");
+        return voted[_voteraddress][election_id];
+    } 
+
+    function getCandidates(uint _election_id) public view returns(uint[] memory){
+        return elections[_election_id].candidatesids;
+    }
 } 
