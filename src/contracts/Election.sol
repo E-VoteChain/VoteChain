@@ -31,4 +31,12 @@ contract VotingForPurpose{
         string votername;
         bool authorized; 
     }
+
+    // Mapping for the voters
+    mapping(address=>mapping(uint=>bool)) voted;
+    mapping(uint => Election) public elections; 
+    mapping(uint => Candidate) public candidates;
+    mapping(address=>Voter) public voters;
+    
+    address[] voterslist;
 } 

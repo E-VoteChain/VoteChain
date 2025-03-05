@@ -7,5 +7,102 @@
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "candidates",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "voteCount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "slogan",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "election_id",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "elections",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "purpose",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "status",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "totalVotes",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "voters",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "votername",
+				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "authorized",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
 	}
 ]}
