@@ -1,81 +1,120 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  /* Base */
+  --background: oklch(0.98 0.01 240); /* Very light blue-gray */
+  --foreground: oklch(0.25 0.02 240); /* Deep blue-gray */
+
+  /* Card/Surface Elements */
+  --card: oklch(0.98 0.01 240); /* Very light blue-gray */
+  --card-foreground: oklch(0.25 0.02 240); /* Deep blue-gray */
+  --popover: oklch(0.98 0.01 240); /* Very light blue-gray */
+  --popover-foreground: oklch(0.25 0.02 240); /* Deep blue-gray */
+
+  /* Primary - Deep Blue (Trust, Security) */
+  --primary: oklch(0.45 0.18 250); /* Deep blue */
+  --primary-foreground: oklch(0.98 0.01 240); /* Very light blue-gray */
+
+  /* Secondary - Teal (Blockchain, Technology) */
+  --secondary: oklch(0.75 0.12 195); /* Teal */
+  --secondary-foreground: oklch(0.25 0.02 240); /* Deep blue-gray */
+
+  /* Muted */
+  --muted: oklch(0.92 0.03 240); /* Light blue-gray */
+  --muted-foreground: oklch(0.5 0.04 240); /* Medium blue-gray */
+
+  /* Accent - Purple (Innovation) */
+  --accent: oklch(0.85 0.1 280); /* Light purple */
+  --accent-foreground: oklch(0.25 0.02 240); /* Deep blue-gray */
+
+  /* Destructive - Red */
+  --destructive: oklch(0.65 0.25 25); /* Bright red */
+  --destructive-foreground: oklch(0.98 0.01 240); /* Very light blue-gray */
+
+  /* Borders & UI Elements */
+  --border: oklch(0.85 0.03 240); /* Light blue-gray border */
+  --input: oklch(0.85 0.03 240); /* Light blue-gray input */
+  --ring: oklch(0.45 0.18 250); /* Deep blue ring (matches primary) */
+
+  /* Charts - Blockchain-inspired palette */
+  --chart-1: oklch(0.55 0.2 250); /* Blue */
+  --chart-2: oklch(0.65 0.15 195); /* Teal */
+  --chart-3: oklch(0.6 0.18 280); /* Purple */
+  --chart-4: oklch(0.7 0.15 145); /* Green (verification) */
+  --chart-5: oklch(0.75 0.15 85); /* Gold (blockchain) */
+
+  /* Sidebar */
+  --sidebar: oklch(0.25 0.02 240); /* Deep blue-gray */
+  --sidebar-foreground: oklch(0.98 0.01 240); /* Very light blue-gray */
+  --sidebar-primary: oklch(0.55 0.2 250); /* Blue */
+  --sidebar-primary-foreground: oklch(0.98 0.01 240); /* Very light blue-gray */
+  --sidebar-accent: oklch(0.35 0.05 240); /* Darker blue-gray */
+  --sidebar-accent-foreground: oklch(0.98 0.01 240); /* Very light blue-gray */
+  --sidebar-border: oklch(0.35 0.05 240); /* Darker blue-gray */
+  --sidebar-ring: oklch(0.55 0.2 250); /* Blue */
+
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  /* Base */
+  --background: oklch(0.2 0.02 240); /* Dark blue-gray */
+  --foreground: oklch(0.95 0.01 240); /* Very light blue-gray */
+
+  /* Card/Surface Elements */
+  --card: oklch(0.2 0.02 240); /* Dark blue-gray */
+  --card-foreground: oklch(0.95 0.01 240); /* Very light blue-gray */
+  --popover: oklch(0.2 0.02 240); /* Dark blue-gray */
+  --popover-foreground: oklch(0.95 0.01 240); /* Very light blue-gray */
+
+  /* Primary - Vibrant Blue (Trust, Security) */
+  --primary: oklch(0.6 0.2 250); /* Vibrant blue */
+  --primary-foreground: oklch(0.15 0.02 240); /* Very dark blue-gray */
+
+  /* Secondary - Teal (Blockchain, Technology) */
+  --secondary: oklch(0.3 0.05 240); /* Darker blue-gray */
+  --secondary-foreground: oklch(0.95 0.01 240); /* Very light blue-gray */
+
+  /* Muted */
+  --muted: oklch(0.3 0.05 240); /* Darker blue-gray */
+  --muted-foreground: oklch(0.75 0.05 240); /* Light blue-gray */
+
+  /* Accent - Purple (Innovation) */
+  --accent: oklch(0.3 0.05 240); /* Darker blue-gray */
+  --accent-foreground: oklch(0.95 0.01 240); /* Very light blue-gray */
+
+  /* Destructive - Red */
+  --destructive: oklch(0.55 0.25 25); /* Darker red */
+  --destructive-foreground: oklch(0.95 0.01 240); /* Very light blue-gray */
+
+  /* Borders & UI Elements */
+  --border: oklch(0.3 0.05 240); /* Darker blue-gray */
+  --input: oklch(0.3 0.05 240); /* Darker blue-gray */
+  --ring: oklch(0.6 0.2 250); /* Vibrant blue */
+
+  /* Charts - Blockchain-inspired palette */
+  --chart-1: oklch(0.65 0.22 250); /* Vibrant blue */
+  --chart-2: oklch(0.7 0.17 195); /* Bright teal */
+  --chart-3: oklch(0.65 0.2 280); /* Vibrant purple */
+  --chart-4: oklch(0.65 0.18 145); /* Bright green */
+  --chart-5: oklch(0.7 0.18 85); /* Bright gold */
+
+  /* Sidebar */
+  --sidebar: oklch(0.15 0.02 240); /* Very dark blue-gray */
+  --sidebar-foreground: oklch(0.95 0.01 240); /* Very light blue-gray */
+  --sidebar-primary: oklch(0.6 0.2 250); /* Vibrant blue */
+  --sidebar-primary-foreground: oklch(0.95 0.01 240); /* Very light blue-gray */
+  --sidebar-accent: oklch(0.25 0.03 240); /* Dark blue-gray */
+  --sidebar-accent-foreground: oklch(0.95 0.01 240); /* Very light blue-gray */
+  --sidebar-border: oklch(0.25 0.03 240); /* Dark blue-gray */
+  --sidebar-ring: oklch(0.6 0.2 250); /* Vibrant blue */
 }
 
-@theme inline {
+  @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

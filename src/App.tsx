@@ -3,6 +3,7 @@ import LoginPage from './pages/LoginPage';
 import React from 'react';
 import AuthContext from './context/AuthContext';
 import connectToBlockchain from './config';
+import Layout from '@/pages/layout';
 
 function App() {
   const auth = React.useContext(AuthContext);
@@ -56,9 +57,17 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/register" element={<LoginPage />} />
-      <Route path="/" element={<div>home</div>} />
-      <Route path="*" element={<div>not found return 404</div>} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<div>home</div>} />
+        <Route path="/voter/add" element={<LoginPage />} />
+        <Route path="/election">
+          <Route path="past" element={<div>past election</div>} />
+          <Route path="upcoming" element={<div>upcoming election</div>} />
+          <Route path="create" element={<div>create election</div>} />
+          <Route path="active" element={<div>active election</div>} />
+        </Route>
+        <Route path="*" element={<div>not found return 404</div>} />
+      </Route>
     </Routes>
   );
 }
