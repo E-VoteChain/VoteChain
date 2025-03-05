@@ -5,6 +5,7 @@ import AuthContext from './context/AuthContext';
 import connectToBlockchain from './config';
 import Layout from '@/pages/layout';
 import CandidatePage from './pages/AddCandidatePage';
+import CreateElection from './pages/CreateElection';
 
 function App() {
   const auth = React.useContext(AuthContext);
@@ -61,10 +62,11 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<div>home</div>} />
         <Route path="/voter/add" element={<LoginPage />} />
-        <Route path="/election">
+        <Route path="/elections/">
+          <Route path=":id" element={<div>election</div>} />
           <Route path="past" element={<div>past election</div>} />
+          <Route path="create" element={<CreateElection />} />
           <Route path="upcoming" element={<div>upcoming election</div>} />
-          <Route path="create" element={<div>create election</div>} />
           <Route path="active" element={<div>active election</div>} />
         </Route>
         <Route path="/candidate/add" element={<CandidatePage />} />
