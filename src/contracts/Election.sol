@@ -81,4 +81,25 @@ contract VotingForPurpose{
         voterslist.push(_voteraddress);
         totalregisteredvoters++;
     }
+
+    function authorize(
+     address _voter) public ownerOn{
+        voters[_voter].authorized= true;     
+    }
+
+    function startVoting(uint _electionid) public ownerOn{
+        require(elections[_electionid].status==1 && elections[_electionid].candidatesids.length>=2);
+        elections[_electionid].status=2;
+    }
+
+    function endElection(uint _electionid) public ownerOn{ 
+        require(elections[_electionid].status==2);
+        elections[_electionid].status=3;
+    }
+    
+    function vote(address _address,uint _candidateID,uint _electionid) public checkvote(_address,_candidateID,_electionid){
+        voted[_address][_electionid]=true;
+        candidates[_candidateID].voteCount++;
+        elections[_electionid].totalVotes++;
+    }
 } 
