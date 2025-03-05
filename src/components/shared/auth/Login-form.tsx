@@ -16,14 +16,14 @@ import {
 } from '@/components/ui/form';
 import { FormError } from '../Form-error';
 import AuthContext from '@/context/AuthContext';
+import { toast } from 'sonner';
 
 export function LoginForm() {
   const [error, setError] = React.useState<string | undefined>('');
-  const [success, setSuccess] = React.useState<string | undefined>('');
   const [isPending, startTransition] = React.useTransition();
   const auth = React.useContext(AuthContext);
 
-  const { dispatch } = auth;
+  const { state, dispatch } = auth;
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -34,10 +34,32 @@ export function LoginForm() {
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError('');
-    setSuccess('');
     startTransition(async () => {
-      console.log('values', values);
-      console.log('dispatch', dispatch);
+      try {
+        if (state.is_admin) {
+          toast.error('Admin cannot register a voter!!');
+          return;
+        }
+
+        if (state.instance !== null) {
+          console.log('state.instance', state.instance);
+          await state.instance.methods.addVoter(state.account, values.name).send({
+            from: state.account,
+            gas: 1000000,
+          });
+
+          dispatch({
+            type: 'REGISTER',
+          });
+
+          toast.message('you are registered as voter', {
+            description: 'You can vote once the admin verifies your request',
+          });
+        }
+      } catch (error) {
+        console.error(`Error: ${error}`);
+        toast.error('You can register only once');
+      }
     });
   };
 
