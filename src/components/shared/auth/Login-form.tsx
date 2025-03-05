@@ -67,9 +67,10 @@ export function LoginForm() {
     <Form {...form}>
       <form className={cn('flex flex-col gap-6')} onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col items-center gap-2 text-center">
-          <h1 className="text-2xl font-bold">Login to your account</h1>
+          <h1 className="text-2xl font-bold">Register as a Voter</h1>
           <p className="text-balance text-sm text-muted-foreground">
-            Enter your Name below to login to your account
+            Enter your Name below to register as a voter. You will be verified by the admin before
+            you can vote.
           </p>
         </div>
         <div className="grid gap-6">
@@ -96,14 +97,8 @@ export function LoginForm() {
           </div>
           <FormError message={error} />
           <Button type="submit" className="w-full" disabled={isPending}>
-            Login
+            Register as Voter
           </Button>
-        </div>
-        <div className="text-center text-sm">
-          Don&apos;t have an account?{' '}
-          <a href="#" className="underline underline-offset-4">
-            Sign up
-          </a>
         </div>
       </form>
     </Form>
