@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prettier": "prettier --check **/*.{js,ts,tsx}",
-    "prettier:fix": "prettier --write **/*.{js,ts,tsx}"
+    "format": "prettier --write **/*.{js,ts,tsx}"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.2",
