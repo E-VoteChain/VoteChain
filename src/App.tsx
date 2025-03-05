@@ -4,6 +4,7 @@ import React from 'react';
 import AuthContext from './context/AuthContext';
 import connectToBlockchain from './config';
 import Layout from '@/pages/layout';
+import CandidatePage from './pages/AddCandidatePage';
 
 function App() {
   const auth = React.useContext(AuthContext);
@@ -66,6 +67,7 @@ function App() {
           <Route path="create" element={<div>create election</div>} />
           <Route path="active" element={<div>active election</div>} />
         </Route>
+        <Route path="/candidate/add" element={<CandidatePage />} />
         <Route path="*" element={<div>not found return 404</div>} />
       </Route>
     </Routes>

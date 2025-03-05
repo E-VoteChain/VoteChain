@@ -1,7 +1,7 @@
-import type React from 'react';
+import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { Vote, Menu, User, LogOut } from 'lucide-react';
+import { Vote, Menu } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -15,16 +15,11 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { getCurrentConnection } from '@/config';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const is_connected = !!getCurrentConnection();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-2">
@@ -74,8 +69,8 @@ export default function Navbar() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink href="/how-it-works" className={navigationMenuTriggerStyle()}>
-                How It Works
+              <NavigationMenuLink href="/voter/add" className={navigationMenuTriggerStyle()}>
+                Register as voter
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -87,37 +82,12 @@ export default function Navbar() {
         </NavigationMenu>
 
         <div className="flex items-center gap-4">
-          {/* User Account Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="hidden md:flex">
-                <User className="h-5 w-5" />
-                <span className="sr-only">User account</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>
-                <Link to="/profile" className="flex w-full">
-                  My Profile
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link to="/my-votes" className="flex w-full">
-                  My Votes
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link to="/logout" className="flex w-full items-center">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Logout
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <Button className="hidden md:inline-flex">Connect Wallet</Button>
-
+          <Button
+            className="hidden md:inline-flex hover:cursor-pointer disabled:opacity-80"
+            disabled={is_connected}
+          >
+            {is_connected ? 'Connected to wallet' : 'Connect Wallet'}
+          </Button>
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
