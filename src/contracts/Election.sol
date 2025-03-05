@@ -60,4 +60,9 @@ contract VotingForPurpose{
     function isAdmin(address user) public view returns(bool){
         return owner==msg.sender || owner == user;
     }
+
+    function createElection(string memory _purpose) public ownerOn{
+        electionCount++;
+        elections[electionCount]=Election(electionCount,_purpose,1,new uint[](0),0);
+    }
 } 
