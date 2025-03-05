@@ -1,0 +1,11 @@
+{   
+    "_format": "hh-sol-artifact-1",
+    "contractName": "Election",
+    "sourceName": "contracts/Election.sol",
+    "ABI":[
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	}
+]}
