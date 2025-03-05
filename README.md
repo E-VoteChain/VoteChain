@@ -1,54 +1,46 @@
-# React + TypeScript + Vite
+# VoteChain - Decentralized Voting Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+VoteChain is a cutting-edge decentralized voting application designed to revolutionize the electoral process through the power of blockchain technology. It enhances trust, transparency, and security in elections by leveraging a robust architecture comprising React.js, Redux for state management, and Web3.js for seamless interaction with the Ethereum blockchain.
 
-Currently, two official plugins are available:
+## Key Features
+- **Administrator Functions:**
+  - Admin Registration
+  - Election Management
+  - Candidate Selection
+  - Voter Authorization
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Voter Functions:**
+  - Voter Registration
+  - Election Participation
+  - Election Results Viewing
 
-## Expanding the ESLint configuration
+## Technology Stack
+- **Frontend:**
+  - React.tsx: Component-based architecture for a responsive user interface.
+  - Context API: State management library crucial for handling user authentication and voting data.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Blockchain Interaction:**
+  - Ethers: Facilitates communication between the frontend and the Ethereum blockchain.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Smart Contracts:**
+  - Solidity: Smart contracts deployed on the Ethereum blockchain to manage core functionalities.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## System Architecture
+VoteChain operates as a decentralized application with three main layers:
+1. **Presentation Layer (Frontend):**
+   - React.js Interface
+   - Web3 Integration for Ethereum Blockchain Communication
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2. **Logic Layer (Backend):**
+   - Solidity Smart Contracts on Ethereum
+   - Server-Side APIs for Communication
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+3. **Data Layer (Blockchain):**
+   - Sepholia Ethereum Blockchain for Immutable Data Storage
+
+## User-Centric Design
+VoteChain prioritizes a user-friendly interface, stringent security measures, and role-based access control to ensure an authentic and seamless voting experience.
+
+## Scalability and Maintenance
+The platform is designed for scalability, utilizing load balancing, elastic infrastructure, and efficient resource utilization. Scheduled upgrades, patch management, and a comprehensive support ecosystem ensure
