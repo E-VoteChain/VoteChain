@@ -12,3 +12,7 @@ export const AddCandidateSchema = z.object({
     .min(1, 'Election ID must be at least 1')
     .max(9999, 'Election ID cannot exceed 9999'),
 });
+
+export const AddElectionSchema = z.object({
+  purpose: z.string().nonempty('Name is required').min(1, 'Purpose is required').toLowerCase(),
+});
