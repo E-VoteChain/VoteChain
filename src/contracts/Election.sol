@@ -39,6 +39,7 @@ contract VotingForPurpose{
     mapping(address=>Voter) public voters;
     
     address[] voterslist;
+    uint public candidatesCount;
     uint public electionCount;
     uint public totalregisteredvoters;
 
@@ -56,4 +57,7 @@ contract VotingForPurpose{
        _;
     }
     
+    function isAdmin(address user) public view returns(bool){
+        return owner==msg.sender || owner == user;
+    }
 } 
