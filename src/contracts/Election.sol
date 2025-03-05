@@ -39,4 +39,11 @@ contract VotingForPurpose{
     mapping(address=>Voter) public voters;
     
     address[] voterslist;
+    uint public electionCount;
+    uint public totalregisteredvoters;
+
+    modifier ownerOn() {
+       require(msg.sender==owner);
+       _;
+    }
 } 
