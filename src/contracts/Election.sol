@@ -46,4 +46,14 @@ contract VotingForPurpose{
        require(msg.sender==owner);
        _;
     }
+
+    modifier checkvote(address _address,uint _candidateID,uint _electionid) {
+        require(_address == msg.sender,"You can only cast your own vote");
+        require(elections[_electionid].candidatesids.length>=2 && elections[_electionid].status==2,"Voting has not started");
+        require(candidates[_candidateID].election_id==_electionid,"Not a valid candidate");
+        require(!voted[_address][_electionid],"You have already voted");
+        require(voters[_address].authorized,"You have no right to Vote");
+       _;
+    }
+    
 } 
