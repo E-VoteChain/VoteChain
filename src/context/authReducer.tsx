@@ -10,7 +10,7 @@ export const initialState: AuthState = {
 
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
-    case 'login':
+    case 'LOGIN':
       return {
         ...state,
         is_connected: true,
@@ -20,7 +20,7 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
         flag: action.payload?.flag || false,
       };
 
-    case 'register':
+    case 'REGISTER':
       return { ...state, flag: false };
 
     default:

@@ -9,7 +9,7 @@ export interface AuthState {
 }
 
 export interface AuthAction {
-  type: 'login' | 'register';
+  type: 'LOGIN' | 'REGISTER';
   payload?: Partial<AuthState>;
 }
 
