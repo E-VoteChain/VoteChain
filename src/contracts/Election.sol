@@ -65,4 +65,20 @@ contract VotingForPurpose{
         electionCount++;
         elections[electionCount]=Election(electionCount,_purpose,1,new uint[](0),0);
     }
+    
+    function addCandidate(string memory _name, string memory _details, uint _election_id) public ownerOn {
+        require(_election_id<=electionCount && uint(elections[_election_id].status)==1,"Election is not created");
+        candidatesCount++;
+        candidates[candidatesCount] = Candidate(candidatesCount, _name, 0, _details, _election_id);
+        elections[_election_id].candidatesids.push(candidatesCount);
+    }
+
+    function addVoter(address _voteraddress,string memory _votername)
+    public {
+        require(msg.sender != owner,"Only voter can register himself");
+        require(bytes(voters[msg.sender].votername).length==0,"Voter already added");
+        voters[_voteraddress]=Voter(_votername,false);
+        voterslist.push(_voteraddress);
+        totalregisteredvoters++;
+    }
 } 
