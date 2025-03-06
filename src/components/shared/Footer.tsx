@@ -19,7 +19,11 @@ export default function Footer() {
             <h3 className="mb-4 text-sm font-medium">Platform</h3>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  to="https://github.com/E-VoteChain/VoteChain/blob/main/README.md"
+                  target="_blank"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   How It Works
                 </Link>
               </li>
