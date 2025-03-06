@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { BarChart, Home, Users, Vote } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -28,8 +28,9 @@ const sidebarItems = [
 ];
 
 export function AdminSidebar() {
+  const location = useLocation();
   return (
-    <div className="hidden md:block">
+    <div className="hidden md:block ">
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">Admin Panel</h2>
@@ -39,8 +40,8 @@ export function AdminSidebar() {
                 key={item.href}
                 variant="ghost"
                 className={cn(
-                  'w-full justify-start',
-                  item.href === '/admin/verify-voters' && 'bg-accent text-accent-foreground'
+                  'w-full justify-start transition-colors duration-200 ease-in-out hover:bg-accent hover:text-accent-foreground',
+                  item.href === location.pathname && 'bg-accent text-accent-foreground'
                 )}
                 asChild
               >

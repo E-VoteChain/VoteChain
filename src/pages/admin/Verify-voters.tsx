@@ -131,10 +131,7 @@ export default function AdminVerifyVotersPage() {
   const verifyUser = async (address: string) => {
     try {
       console.log('state.instance', state.instance);
-      const result = await state.instance!.authorize(address).send({
-        from: state.account,
-        gas: 1000000,
-      });
+      const result = await state.instance!.authorize(address);
       console.log('result', result);
       setVerificationDialogOpen(false);
       setVoters((prev) =>

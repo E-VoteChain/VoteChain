@@ -52,10 +52,7 @@ export function CreateElectionForm() {
             }
           }
 
-          await state.instance.createElection(values.purpose).send({
-            from: state.account,
-            gas: 1000000,
-          });
+          await state.instance.createElection(values.purpose);
 
           toast.message('Election created successfully', {
             description: 'A new election has been created.',
@@ -63,7 +60,6 @@ export function CreateElectionForm() {
         }
       } catch (error) {
         console.error(`Error: ${error}`);
-        toast.error('Error occurred while creating the election');
       }
     });
   };

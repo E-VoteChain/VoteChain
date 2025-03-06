@@ -47,10 +47,7 @@ export function AddCandidateForm() {
 
       try {
         if (state.instance !== null) {
-          await state.instance.methods.addCandidate(values.name, values.slogan, electionid).send({
-            from: state.account,
-            gas: 1000000,
-          });
+          await state.instance.methods.addCandidate(values.name, values.slogan, electionid);
 
           toast.success('Candidate added successfully');
           form.reset();
