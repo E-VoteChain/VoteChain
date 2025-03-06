@@ -21,10 +21,7 @@ import { toast } from 'sonner';
 export function CreateElectionForm() {
   const [error, setError] = React.useState<string | undefined>('');
   const [isPending, startTransition] = React.useTransition();
-  const auth = React.useContext(AuthContext);
-
-  const { state } = auth;
-
+  const { state } = React.useContext(AuthContext);
   const form = useForm<z.infer<typeof AddElectionSchema>>({
     resolver: zodResolver(AddElectionSchema),
     defaultValues: {
@@ -42,13 +39,10 @@ export function CreateElectionForm() {
         }
 
         if (state.instance !== null) {
-          const totalElections = await state.instance.methods.noOfElections().call();
-          console.log('instance', state.instance);
-          console.log('TotalElections', totalElections);
+          const totalElections = await state.instance.noOfElections();
+          console.log('totalElections', totalElections);
           for (let i = 1; i <= totalElections; i++) {
-            const electionData = await state.instance.methods
-              .getElection(i)
-              .call({ from: state.account });
+            const electionData = await state.instance.getElection(i);
             if (
               electionData.purpose &&
               electionData.purpose.toLowerCase() === values.purpose.toLowerCase()
@@ -58,8 +52,7 @@ export function CreateElectionForm() {
             }
           }
 
-          console.log('Creating election with purpose:', values.purpose);
-          await state.instance.methods.createElection(values.purpose).send({
+          await state.instance.createElection(values.purpose).send({
             from: state.account,
             gas: 1000000,
           });

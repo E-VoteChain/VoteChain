@@ -39,6 +39,7 @@ function App() {
         if (!is_admin) {
           try {
             const voter = await contractInstance.getVoterdetails(account);
+
             if (voter?.votername) {
               is_voter = false;
             }
@@ -46,6 +47,8 @@ function App() {
             console.error('Error while fetching user data:', error);
           }
         }
+
+        console.log('is_admin', is_admin);
 
         dispatch({
           type: 'LOGIN',
@@ -74,6 +77,7 @@ function App() {
           <Route path="active" element={<div>active election</div>} />
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<div>admin dashboard</div>} />
           <Route path="verify-voters" element={<AdminVerifyVotersPage />} />
         </Route>
         <Route path="/candidate/add" element={<CandidatePage />} />

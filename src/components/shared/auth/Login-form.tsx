@@ -42,8 +42,7 @@ export function LoginForm() {
         }
 
         if (state.instance !== null) {
-          console.log('state.instance', state.instance);
-          await state.instance.methods.addVoter(state.account, values.name).send({
+          await state.instance.addVoter(state.account, values.name).send({
             from: state.account,
             gas: 1000000,
           });
