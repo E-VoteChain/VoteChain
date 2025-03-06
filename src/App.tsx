@@ -8,7 +8,11 @@ import CandidatePage from '@/pages/AddCandidatePage';
 import CreateElection from '@/pages/CreateElection';
 import HomePage from '@/pages/Home';
 import AdminLayout from '@/pages/admin/AdminLayout';
-import AdminVerifyVotersPage from './pages/admin/Verify-voters';
+import AdminVerifyVotersPage from '@/pages/admin/Verify-voters';
+import AdminElectionsPage from '@/pages/admin/Election';
+import ElectionDetailPage from '@/components/shared/election/page';
+import VotePage from '@/pages/election/VotePage';
+import ElectionResultsPage from '@/pages/election/ResultPage';
 
 function App() {
   const auth = React.useContext(AuthContext);
@@ -70,13 +74,19 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/voter/add" element={<LoginPage />} />
         <Route path="/elections/">
-          <Route path=":id" element={<div>election</div>} />
+          <Route path=":id">
+            <Route index element={<ElectionDetailPage />} />
+            <Route path="vote" element={<VotePage />} />
+            <Route path="results" element={<ElectionResultsPage />} />
+          </Route>
           <Route path="past" element={<div>past election</div>} />
-          <Route path="create" element={<CreateElection />} />
           <Route path="upcoming" element={<div>upcoming election</div>} />
           <Route path="active" element={<div>active election</div>} />
         </Route>
+
         <Route path="/admin" element={<AdminLayout />}>
+          <Route path="elections" element={<AdminElectionsPage />} />
+          <Route path="create-election" element={<CreateElection />} />
           <Route index element={<div>admin dashboard</div>} />
           <Route path="verify-voters" element={<AdminVerifyVotersPage />} />
         </Route>

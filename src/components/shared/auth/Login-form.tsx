@@ -42,10 +42,7 @@ export function LoginForm() {
         }
 
         if (state.instance !== null) {
-          await state.instance.addVoter(state.account, values.name).send({
-            from: state.account,
-            gas: 1000000,
-          });
+          await state.instance.addVoter(state.account, values.name);
 
           dispatch({
             type: 'REGISTER',

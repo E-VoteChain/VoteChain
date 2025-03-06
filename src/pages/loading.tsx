@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 
 export default function Loading() {
   return (
-    <div className=" grid flex-1 gap-12  px-4 py-6 md:px-6 md:py-8">
+    <div className=" grid flex-1 gap-12  px-1 py-6 md:py-8">
       <main className="space-y-6">
         <div>
           <Skeleton className="h-10 w-[250px]" />
