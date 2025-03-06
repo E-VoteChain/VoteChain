@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router';
 import { Info, Plus, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -24,12 +24,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { toast } from 'sonner';
+import AuthContext from '@/context/AuthContext';
 
 export default function CreateElectionPage() {
   const [purpose, setPurpose] = useState('');
-
   const [candidates, setCandidates] = useState([{ id: 1, name: '', slogan: '' }]);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const { state } = useContext(AuthContext);
 
   const addCandidate = () => {
     setCandidates([...candidates, { id: candidates.length + 1, name: '', slogan: '' }]);
@@ -49,9 +51,75 @@ export default function CreateElectionPage() {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSuccessDialogOpen(true);
+
+    if (candidates.length < 2) {
+      toast.error('You need to have at least 2 candidates');
+      return;
+    }
+
+    if (!state.is_admin) {
+      toast.error('You do not have permission to create an election');
+      return;
+    }
+
+    let totalElections = 0;
+    let is_operation_successful = false;
+
+    const createElectionPromise = new Promise((resolve, reject) => {
+      (async () => {
+        try {
+          totalElections = await state.instance!.noOfElections();
+
+          for (let i = 1; i <= totalElections; i++) {
+            const electionData = await state.instance!.getElection(i);
+            if (
+              electionData.purpose &&
+              electionData.purpose.toLowerCase() === purpose.toLowerCase()
+            ) {
+              throw new Error('This election is already created');
+            }
+          }
+
+          const tx = await state.instance!.createElection(purpose);
+          await tx.wait();
+
+          totalElections = await state.instance!.noOfElections();
+
+          for (const candidate of candidates) {
+            console.log('Adding candidate:', candidate);
+            const tx = await state.instance!.addCandidate(
+              candidate.name,
+              candidate.slogan,
+              totalElections
+            );
+            await tx.wait();
+          }
+          is_operation_successful = true;
+          resolve('Election created successfully');
+        } catch (error) {
+          reject(error);
+        }
+      })();
+    });
+
+    toast.promise(createElectionPromise, {
+      loading: 'Creating election...',
+      success: 'Election created successfully',
+      error: (error) => {
+        if (error.message.includes('user rejected transaction')) {
+          return 'Error: User rejected the transaction';
+        }
+        return `Error while creating the election`;
+      },
+    });
+
+    createElectionPromise.then(() => {
+      if (is_operation_successful) {
+        setSuccessDialogOpen(true);
+      }
+    });
   };
 
   return (
@@ -148,7 +216,9 @@ export default function CreateElectionPage() {
             <Button variant="outline" asChild>
               <Link to="/admin/elections">Cancel</Link>
             </Button>
-            <Button type="submit">Create Election</Button>
+            <Button type="submit" className="cursor-pointer">
+              Create Election
+            </Button>
           </CardFooter>
         </Card>
       </form>
