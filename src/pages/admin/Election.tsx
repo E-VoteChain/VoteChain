@@ -93,8 +93,8 @@ export default function AdminElectionsPage() {
       </Tabs>
 
       {filteredElections.length > 0 ? (
-        <Card className='gap-2 py-4'>
-          <CardHeader className='px-2 py-0 my-0'>
+        <Card className="gap-2 py-4">
+          <CardHeader className="px-2 py-0 my-0">
             <CardTitle>All Elections</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
@@ -123,8 +123,10 @@ export default function AdminElectionsPage() {
                       )}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                      <Users className="mr-1 h-4 w-4" />
-                      {election.totalVotes} Votes
+                      <span className="flex flex-row items-center">
+                        <Users className="mr-1 h-4 w-4" />
+                        {election.totalVotes} Votes
+                      </span>
                     </TableCell>
                     <TableCell className="text-right">
                       <Button variant="ghost" size="sm" asChild>
