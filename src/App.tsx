@@ -7,6 +7,8 @@ import Layout from '@/pages/layout';
 import CandidatePage from '@/pages/AddCandidatePage';
 import CreateElection from '@/pages/CreateElection';
 import HomePage from '@/pages/Home';
+import AdminLayout from '@/pages/admin/AdminLayout';
+import AdminVerifyVotersPage from './pages/admin/Verify-voters';
 
 function App() {
   const auth = React.useContext(AuthContext);
@@ -70,6 +72,9 @@ function App() {
           <Route path="create" element={<CreateElection />} />
           <Route path="upcoming" element={<div>upcoming election</div>} />
           <Route path="active" element={<div>active election</div>} />
+        </Route>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="verify-voters" element={<AdminVerifyVotersPage />} />
         </Route>
         <Route path="/candidate/add" element={<CandidatePage />} />
         <Route path="*" element={<div>not found return 404</div>} />
