@@ -76,7 +76,7 @@ export default function AdminElectionsPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-3xl font-bold tracking-tight">Elections</h1>
         <Button asChild>
-          <Link to="/elections/create">
+          <Link to="/admin/create-election">
             <Plus className="mr-2 h-4 w-4" />
             Create Election
           </Link>

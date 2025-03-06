@@ -13,6 +13,7 @@ import AdminElectionsPage from '@/pages/admin/Election';
 import ElectionDetailPage from '@/components/shared/election/page';
 import VotePage from '@/pages/election/VotePage';
 import ElectionResultsPage from '@/pages/election/ResultPage';
+import ElectionDetails from '@/pages/election/ElectionPage';
 
 function App() {
   const auth = React.useContext(AuthContext);
@@ -85,6 +86,7 @@ function App() {
         </Route>
 
         <Route path="/admin" element={<AdminLayout />}>
+          <Route path="elections/:id" element={<ElectionDetails />} />
           <Route path="elections" element={<AdminElectionsPage />} />
           <Route path="create-election" element={<CreateElection />} />
           <Route index element={<div>admin dashboard</div>} />

@@ -30,8 +30,8 @@ const sidebarItems = [
 export function AdminSidebar() {
   const location = useLocation();
   return (
-    <div className="hidden md:block ">
-      <div className="space-y-4 py-4">
+    <div className="hidden md:block border-r-1 ">
+      <div className="space-y-4 py-6">
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">Admin Panel</h2>
           <div className="space-y-1">
