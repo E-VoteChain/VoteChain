@@ -27,101 +27,69 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import AuthContext from '@/context/AuthContext';
+import Loading from '../loading';
+import { toast } from 'sonner';
 
-const voters = [
-  {
-    id: 1,
-    name: 'Alex Johnson',
-    email: 'alex.johnson@example.com',
-    walletAddress: '0x1a2b3c4d5e6f...',
-    registrationDate: '2023-11-20T14:23:45',
-    status: 'pending',
-    electionId: 3,
-    electionTitle: 'City Council Representative Election',
-  },
-  {
-    id: 2,
-    name: 'Maria Garcia',
-    email: 'maria.garcia@example.com',
-    walletAddress: '0x7g8h9i0j1k2l...',
-    registrationDate: '2023-11-21T09:15:30',
-    status: 'verified',
-    electionId: 3,
-    electionTitle: 'City Council Representative Election',
-  },
-  {
-    id: 3,
-    name: 'James Smith',
-    email: 'james.smith@example.com',
-    walletAddress: '0x3m4n5o6p7q8r...',
-    registrationDate: '2023-11-21T11:42:18',
-    status: 'pending',
-    electionId: 3,
-    electionTitle: 'City Council Representative Election',
-  },
-  {
-    id: 4,
-    name: 'Sarah Williams',
-    email: 'sarah.williams@example.com',
-    walletAddress: '0x9s0t1u2v3w4x...',
-    registrationDate: '2023-11-22T08:30:55',
-    status: 'rejected',
-    electionId: 2,
-    electionTitle: 'Cooperative Annual Board Election',
-  },
-  {
-    id: 5,
-    name: 'David Brown',
-    email: 'david.brown@example.com',
-    walletAddress: '0x5y6z7a8b9c0d...',
-    registrationDate: '2023-11-22T13:10:22',
-    status: 'pending',
-    electionId: 1,
-    electionTitle: 'University Faculty Senate Election',
-  },
-  {
-    id: 6,
-    name: 'Jennifer Miller',
-    email: 'jennifer.miller@example.com',
-    walletAddress: '0x1e2f3g4h5i6j...',
-    registrationDate: '2023-11-23T10:05:17',
-    status: 'verified',
-    electionId: 1,
-    electionTitle: 'University Faculty Senate Election',
-  },
-  {
-    id: 7,
-    name: 'Michael Davis',
-    email: 'michael.davis@example.com',
-    walletAddress: '0x7k8l9m0n1o2p...',
-    registrationDate: '2023-11-23T15:48:33',
-    status: 'pending',
-    electionId: 3,
-    electionTitle: 'City Council Representative Election',
-  },
-];
+interface Voter {
+  id: number;
+  votername: string;
+  address: string;
+  authorized: string;
+}
 
 export default function AdminVerifyVotersPage() {
   const [selectedVoter, setSelectedVoter] = React.useState<(typeof voters)[0] | null>(null);
   const [verificationDialogOpen, setVerificationDialogOpen] = React.useState(false);
-  const [filteredVoters, setFilteredVoters] = React.useState(voters);
   const [searchQuery, setSearchQuery] = React.useState('');
   const [statusFilter, setStatusFilter] = React.useState('all');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [electionFilter, setElectionFilter] = React.useState('all');
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [voters, setVoters] = React.useState<Voter[]>([]);
+  const [filteredVoters, setFilteredVoters] = React.useState([] as Voter[]);
   const { state } = React.useContext(AuthContext);
 
   React.useEffect(() => {
     const getVoters = async () => {
-      if (state.instance !== null) {
-        const voters_list = await state.instance.methods.totalRegisteredVoters().call({
-          from: state.account,
-        });
+      if (!state.instance) return;
 
-        console.log('voters_list', voters_list);
+      setLoading(true);
+      try {
+        const registered_voters: string[] = (await state.instance.totalRegisteredVoters()) || [];
+
+        console.log('Registered Voters:', registered_voters);
+
+        const voters_arr = await Promise.all(
+          registered_voters.map(async (address, index) => {
+            try {
+              const voter = await state.instance!.getVoterdetails(address);
+              const votername = voter.votername;
+              const authorized = voter.authorized ? 'verified' : 'pending';
+
+              return { id: index + 1, votername, authorized, address };
+            } catch (error) {
+              console.error(`Error fetching voter details for ${address}:`, error);
+              return null;
+            }
+          })
+        );
+
+        const validVoters: Voter[] = voters_arr.filter((v): v is Voter => v !== null);
+        setVoters(validVoters);
+        setFilteredVoters(validVoters);
+      } catch (error) {
+        console.error('Error fetching voters:', error);
+      } finally {
+        setLoading(false);
       }
     };
+
     getVoters();
   }, [state.account, state.instance]);
+
+  React.useEffect(() => {
+    setFilteredVoters(voters);
+  }, [voters]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -139,18 +107,17 @@ export default function AdminVerifyVotersPage() {
     if (query) {
       filtered = filtered.filter(
         (voter) =>
-          voter.name.toLowerCase().includes(query.toLowerCase()) ||
-          voter.email.toLowerCase().includes(query.toLowerCase()) ||
-          voter.walletAddress.toLowerCase().includes(query.toLowerCase())
+          voter.votername.toLowerCase().includes(query.toLowerCase()) ||
+          voter.address.toLowerCase().includes(query.toLowerCase())
       );
     }
 
     if (status !== 'all') {
-      filtered = filtered.filter((voter) => voter.status === status);
+      filtered = filtered.filter((voter) => voter.authorized === status);
     }
 
     if (election !== 'all') {
-      filtered = filtered.filter((voter) => voter.electionId.toString() === election);
+      filtered = filtered.filter((voter) => voter.id.toString() === election);
     }
 
     setFilteredVoters(filtered);
@@ -159,6 +126,29 @@ export default function AdminVerifyVotersPage() {
   const openVerificationDialog = (voter: (typeof voters)[0]) => {
     setSelectedVoter(voter);
     setVerificationDialogOpen(true);
+  };
+
+  const verifyUser = async (address: string) => {
+    try {
+      console.log('state.instance', state.instance);
+      const result = await state.instance!.authorize(address).send({
+        from: state.account,
+        gas: 1000000,
+      });
+      console.log('result', result);
+      setVerificationDialogOpen(false);
+      setVoters((prev) =>
+        prev.map((v) => {
+          if (v.address === address) {
+            return { ...v, authorized: 'verified' };
+          }
+          return v;
+        })
+      );
+      toast.success('Voter verified successfully');
+    } catch (error) {
+      console.error('Error while verifying user:', error);
+    }
   };
 
   const getStatusBadge = (status: string) => {
@@ -175,6 +165,10 @@ export default function AdminVerifyVotersPage() {
         return null;
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <main className="flex flex-col space-y-6">
@@ -218,7 +212,7 @@ export default function AdminVerifyVotersPage() {
           <div className="flex items-center justify-between">
             <CardTitle>Voter Registrations</CardTitle>
             <Badge variant="outline">
-              {filteredVoters.filter((v) => v.status === 'pending').length} Pending
+              {filteredVoters.filter((v) => v.authorized === 'pending').length} Pending
             </Badge>
           </div>
         </CardHeader>
@@ -235,14 +229,14 @@ export default function AdminVerifyVotersPage() {
             <TableBody>
               {filteredVoters.map((voter) => (
                 <TableRow key={voter.id}>
-                  <TableCell className="font-medium text-center">{voter.name}</TableCell>
+                  <TableCell className="font-medium text-center">{voter.votername}</TableCell>
                   <TableCell className="hidden md:table-cell font-mono text-xs">
-                    {voter.walletAddress}
+                    {voter.address}
                   </TableCell>
-                  <TableCell>{getStatusBadge(voter.status)}</TableCell>
+                  <TableCell>{getStatusBadge(voter.authorized)}</TableCell>
                   <TableCell className="text-center">
                     <div className="flex justify-end gap-2">
-                      {voter.status === 'pending' && (
+                      {voter.authorized === 'pending' && (
                         <>
                           <Button
                             variant="outline"
@@ -254,7 +248,7 @@ export default function AdminVerifyVotersPage() {
                           </Button>
                         </>
                       )}
-                      {voter.status !== 'pending' && (
+                      {voter.authorized !== 'pending' && (
                         <Button variant="outline" size="sm" asChild className="h-8 w-15">
                           <Link to={`/admin/voters/${voter.id}`}>Details</Link>
                         </Button>
@@ -281,11 +275,11 @@ export default function AdminVerifyVotersPage() {
             <div className="space-y-4 py-2">
               <div className="grid grid-cols-[100px_1fr] items-center gap-2">
                 <span className="font-medium">Name:</span>
-                <span>{selectedVoter.name}</span>
+                <span>{selectedVoter.votername}</span>
               </div>
               <div className="grid grid-cols-[100px_1fr] items-center gap-2">
                 <span className="font-medium">Wallet:</span>
-                <span className="font-mono text-xs">{selectedVoter.walletAddress}</span>
+                <span className="font-mono text-xs">{selectedVoter.address}</span>
               </div>
               <div className="rounded-lg border bg-muted/50 p-3">
                 <div className="flex items-center space-x-2">
@@ -295,7 +289,7 @@ export default function AdminVerifyVotersPage() {
                 <div className="mt-2 space-y-2">
                   <div className="flex items-center justify-between">
                     <Label htmlFor="wallet-verified">Wallet Verified</Label>
-                    <Switch id="wallet-verified" defaultChecked />
+                    <Switch id="wallet-verified" disabled defaultChecked />
                   </div>
                 </div>
               </div>
@@ -307,7 +301,7 @@ export default function AdminVerifyVotersPage() {
               Cancel
             </Button>
             <Button
-              onClick={() => setVerificationDialogOpen(false)}
+              onClick={() => verifyUser(selectedVoter!.address)}
               className="hover:cursor-pointer"
             >
               <ShieldCheck className="h-4 w-4" />

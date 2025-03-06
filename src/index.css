@@ -4,6 +4,17 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: 'Inter';
+  src: url('/font/Inter.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
 :root {
   /* Base */
   --background: oklch(0.98 0.01 240); /* Very light blue-gray */
@@ -114,7 +125,7 @@
   --sidebar-ring: oklch(0.6 0.2 250); /* Vibrant blue */
 }
 
-  @theme inline {
+@theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

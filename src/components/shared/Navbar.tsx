@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { Vote, Menu } from 'lucide-react';
+import { Vote, Menu, Shield } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -16,9 +16,11 @@ import {
 } from '@/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { getCurrentConnection } from '@/config';
+import AuthContext from '@/context/AuthContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { state } = React.useContext(AuthContext);
   const is_connected = !!getCurrentConnection();
 
   return (
@@ -82,6 +84,14 @@ export default function Navbar() {
         </NavigationMenu>
 
         <div className="flex items-center gap-4">
+          {state.is_admin ? (
+            <Button variant="ghost" size="sm" asChild className="hidden md:flex">
+              <Link to="/admin" className='font-medium'>
+                <Shield className="h-4 w-4" />
+                Admin
+              </Link>
+            </Button>
+          ) : null}
           <Button
             className="hidden md:inline-flex hover:cursor-pointer disabled:opacity-80"
             disabled={is_connected}
