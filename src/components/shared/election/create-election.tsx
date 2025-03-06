@@ -43,6 +43,8 @@ export function CreateElectionForm() {
 
         if (state.instance !== null) {
           const totalElections = await state.instance.methods.noOfElections().call();
+          console.log('instance', state.instance);
+          console.log('TotalElections', totalElections);
           for (let i = 1; i <= totalElections; i++) {
             const electionData = await state.instance.methods
               .getElection(i)
