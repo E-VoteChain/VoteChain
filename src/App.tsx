@@ -1,11 +1,12 @@
 import { Route, Routes } from 'react-router';
-import LoginPage from './pages/LoginPage';
+import LoginPage from '@/pages/LoginPage';
 import React from 'react';
-import AuthContext from './context/AuthContext';
-import connectToBlockchain from './config';
+import AuthContext from '@/context/AuthContext';
+import connectToBlockchain from '@/config';
 import Layout from '@/pages/layout';
-import CandidatePage from './pages/AddCandidatePage';
-import CreateElection from './pages/CreateElection';
+import CandidatePage from '@/pages/AddCandidatePage';
+import CreateElection from '@/pages/CreateElection';
+import HomePage from '@/pages/Home';
 
 function App() {
   const auth = React.useContext(AuthContext);
@@ -27,6 +28,7 @@ function App() {
         let is_voter = true;
 
         try {
+          console.log('admin', account);
           is_admin = await contractInstance.isAdmin(account);
         } catch (error) {
           console.error('Error while fetching user data:', error);
@@ -60,7 +62,7 @@ function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<div>home</div>} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/voter/add" element={<LoginPage />} />
         <Route path="/elections/">
           <Route path=":id" element={<div>election</div>} />
