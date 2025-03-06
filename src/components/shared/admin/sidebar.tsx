@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { BarChart, Calendar, FileText, Home, Settings, Shield, Users, Vote } from 'lucide-react';
+import { BarChart, Home, Users, Vote } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -24,26 +24,6 @@ const sidebarItems = [
     title: 'Results',
     href: '/admin/results',
     icon: BarChart,
-  },
-  {
-    title: 'Reports',
-    href: '/admin/reports',
-    icon: FileText,
-  },
-  {
-    title: 'Calendar',
-    href: '/admin/calendar',
-    icon: Calendar,
-  },
-  {
-    title: 'Security',
-    href: '/admin/security',
-    icon: Shield,
-  },
-  {
-    title: 'Settings',
-    href: '/admin/settings',
-    icon: Settings,
   },
 ];
 
