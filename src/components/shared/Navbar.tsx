@@ -70,11 +70,13 @@ export default function Navbar() {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/voter/add" className={navigationMenuTriggerStyle()}>
-                Register as voter
-              </NavigationMenuLink>
-            </NavigationMenuItem>
+            {state.is_admin ? null : (
+              <NavigationMenuItem>
+                <NavigationMenuLink href="/voter/add" className={navigationMenuTriggerStyle()}>
+                  Register as voter
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            )}
             <NavigationMenuItem>
               <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/about">
                 About
@@ -86,7 +88,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           {state.is_admin ? (
             <Button variant="ghost" size="sm" asChild className="hidden md:flex">
-              <Link to="/admin" className='font-medium'>
+              <Link to="/admin/elections" className="font-medium">
                 <Shield className="h-4 w-4" />
                 Admin
               </Link>

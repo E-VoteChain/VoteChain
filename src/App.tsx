@@ -14,6 +14,7 @@ import ElectionDetailPage from '@/components/shared/election/page';
 import VotePage from '@/pages/election/VotePage';
 import ElectionResultsPage from '@/pages/election/ResultPage';
 import ElectionDetails from '@/pages/election/ElectionPage';
+import ResultsPage from './pages/election/ResultsPage';
 
 function App() {
   const auth = React.useContext(AuthContext);
@@ -91,6 +92,7 @@ function App() {
           <Route path="create-election" element={<CreateElection />} />
           <Route index element={<div>admin dashboard</div>} />
           <Route path="verify-voters" element={<AdminVerifyVotersPage />} />
+          <Route path="results" element={<ResultsPage />} />
         </Route>
         <Route path="/candidate/add" element={<CandidatePage />} />
         <Route path="*" element={<div>not found return 404</div>} />
