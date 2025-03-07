@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Play, Square } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import AuthContext from '@/context/AuthContext';
 import { toast } from 'sonner';
 
@@ -27,6 +27,7 @@ export default function ElectionDetails() {
   const [election, setElection] = React.useState<ElectionProps | null>(null);
   const [candidates, setCandidates] = React.useState<CandidateProps[] | null>(null);
   const { state } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const params = useParams();
 
@@ -79,6 +80,7 @@ export default function ElectionDetails() {
       loading: 'Ending election...',
       success: () => {
         setElectionStatus('Ended');
+        navigate('/admin/results');
         return 'Election ended successfully';
       },
       error: (error) => {

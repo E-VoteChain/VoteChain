@@ -254,7 +254,7 @@ export default function CreateElectionPage() {
               <Link to="/admin/elections">View All Elections</Link>
             </Button>
             <Button onClick={() => setSuccessDialogOpen(false)} asChild>
-              <Link to="/admin/elections/1">View Election Details</Link>
+              <Link to="/admin/elections/26">View Election Details</Link>
             </Button>
           </DialogFooter>
         </DialogContent>
