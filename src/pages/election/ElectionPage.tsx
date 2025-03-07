@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Play, Square } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import AuthContext from '@/context/AuthContext';
 import { toast } from 'sonner';
 
@@ -28,7 +29,6 @@ export default function ElectionDetails() {
   const [candidates, setCandidates] = React.useState<CandidateProps[] | null>(null);
   const { state } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const params = useParams();
 
   const handleStartElection = async () => {
